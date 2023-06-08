@@ -18135,10 +18135,10 @@ int
 main ()
 {
 unsigned int crc = 0;
-   crc = __builtin_loongarch_crcc_w_b_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_h_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_w_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_d_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_b_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_h_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_w_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_d_w(0, crc);
    /* return computed value, to prevent the above being optimized away */
    return crc == 0;
   ;
@@ -18176,10 +18176,10 @@ int
 main ()
 {
 unsigned int crc = 0;
-   crc = __builtin_loongarch_crcc_w_b_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_h_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_w_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_d_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_b_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_h_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_w_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_d_w(0, crc);
    /* return computed value, to prevent the above being optimized away */
    return crc == 0;
   ;
@@ -18222,7 +18222,7 @@ fi
 #
 # You can override this logic by setting the appropriate USE_*_CRC32 flag to 1
 # in the template or configure command line.
-if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && test x"$USE_SSE42_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_ARMV8_CRC32C" = x"" && test x"$USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK" = x""; then
+if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && test x"$USE_SSE42_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_ARMV8_CRC32C" = x"" && test x"$USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_LOONGARCH_CRC32C" = x""; then
   # Use Intel SSE 4.2 if available.
   if test x"$pgac_sse42_crc32_intrinsics" = x"yes" && test x"$SSE4_2_TARGETED" = x"1" ; then
     USE_SSE42_CRC32C=1
@@ -18240,10 +18240,15 @@ if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && 
         if test x"$pgac_armv8_crc32c_intrinsics" = x"yes"; then
           USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK=1
         else
-          # fall back to slicing-by-8 algorithm, which doesn't require any
-          # special CPU support.
-          USE_SLICING_BY_8_CRC32C=1
-	fi
+          if test x"$pgac_loongarch_crc32c_intrinsics" = x"yes" && test x"$CFLAGS_CRC" = x""; then
+            # LoongArch CRCC instructions.
+            USE_LOONGARCH_CRC32C=1
+          else
+            # fall back to slicing-by-8 algorithm, which doesn't require any
+            # special CPU support.
+            USE_SLICING_BY_8_CRC32C=1
+          fi
+        fi
       fi
     fi
   fi
@@ -18284,12 +18289,21 @@ $as_echo "#define USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK 1" >>confdefs.h
         { $as_echo "$as_me:${as_lineno-$LINENO}: result: ARMv8 CRC instructions with runtime check" >&5
 $as_echo "ARMv8 CRC instructions with runtime check" >&6; }
       else
+        if test x"$USE_LOONGARCH_CRC32C" = x"1"; then
+
+$as_echo "#define USE_LOONGARCH_CRC32C 1" >>confdefs.h
+
+          PG_CRC32C_OBJS="pg_crc32c_loongarch.o"
+          { $as_echo "$as_me:${as_lineno-$LINENO}: result: LoongArch CRC instructions" >&5
+$as_echo "LoongArch CRC instructions" >&6; }
+        else
 
 $as_echo "#define USE_SLICING_BY_8_CRC32C 1" >>confdefs.h
 
-        PG_CRC32C_OBJS="pg_crc32c_sb8.o"
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: slicing-by-8" >&5
+          PG_CRC32C_OBJS="pg_crc32c_sb8.o"
+          { $as_echo "$as_me:${as_lineno-$LINENO}: result: slicing-by-8" >&5
 $as_echo "slicing-by-8" >&6; }
+        fi
       fi
     fi
   fi
