@@ -18116,6 +18116,96 @@ fi
 
 
 
+# Check for LoongArch CRC intrinsics to do CRC calculations.
+#
+# Check if __builtin_loongarch_crcc_* intrinsics can be used
+# with the default compiler flags.
+# CFLAGS_CRC is set if the extra flag is required.
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for __builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w and __builtin_loongarch_crcc_w_d_w with CFLAGS=" >&5
+$as_echo_n "checking for __builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w and __builtin_loongarch_crcc_w_d_w with CFLAGS=... " >&6; }
+if ${pgac_cv_loongarch_crc32c_intrinsics_+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  pgac_save_CFLAGS=$CFLAGS
+CFLAGS="$pgac_save_CFLAGS "
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+unsigned int crc = 0;
+   crc = __builtin_loongarch_crcc_w_b_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_h_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_w_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_d_w(crc, 0);
+   /* return computed value, to prevent the above being optimized away */
+   return crc == 0;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  pgac_cv_loongarch_crc32c_intrinsics_=yes
+else
+  pgac_cv_loongarch_crc32c_intrinsics_=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+CFLAGS="$pgac_save_CFLAGS"
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $pgac_cv_loongarch_crc32c_intrinsics_" >&5
+$as_echo "$pgac_cv_loongarch_crc32c_intrinsics_" >&6; }
+if test x"$pgac_cv_loongarch_crc32c_intrinsics_" = x"yes"; then
+  CFLAGS_CRC=""
+  pgac_loongarch_crc32c_intrinsics=yes
+fi
+
+if test x"$pgac_loongarch_crc32c_intrinsics" != x"yes"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for __builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w and __builtin_loongarch_crcc_w_d_w with CFLAGS=-march=loongarch64" >&5
+$as_echo_n "checking for __builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w and __builtin_loongarch_crcc_w_d_w with CFLAGS=-march=loongarch64... " >&6; }
+if ${pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  pgac_save_CFLAGS=$CFLAGS
+CFLAGS="$pgac_save_CFLAGS -march=loongarch64"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+unsigned int crc = 0;
+   crc = __builtin_loongarch_crcc_w_b_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_h_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_w_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_d_w(crc, 0);
+   /* return computed value, to prevent the above being optimized away */
+   return crc == 0;
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64=yes
+else
+  pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+CFLAGS="$pgac_save_CFLAGS"
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64" >&5
+$as_echo "$pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64" >&6; }
+if test x"$pgac_cv_loongarch_crc32c_intrinsics__march_loongarch64" = x"yes"; then
+  CFLAGS_CRC="-march=loongarch64"
+  pgac_loongarch_crc32c_intrinsics=yes
+fi
+
+fi
+
+
+
 # Select CRC-32C implementation.
 #
 # If we are targeting a processor that has Intel SSE 4.2 instructions, we can
