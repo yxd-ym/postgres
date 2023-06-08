@@ -2174,7 +2174,7 @@ if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && 
         if test x"$pgac_armv8_crc32c_intrinsics" = x"yes"; then
           USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK=1
         else
-          if test x"$pgac_loongarch_crc32c_intrinsics" = x"yes" && test x"$CFLAGS_CRC" = x""; then
+          if test x"$pgac_loongarch_crc32c_intrinsics" = x"yes"; then
             # LoongArch CRCC instructions.
             USE_LOONGARCH_CRC32C=1
           else
