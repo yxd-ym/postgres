@@ -98,6 +98,11 @@ pg_crc32c_armv8.o: CFLAGS+=$(CFLAGS_CRC)
 pg_crc32c_armv8_shlib.o: CFLAGS+=$(CFLAGS_CRC)
 pg_crc32c_armv8_srv.o: CFLAGS+=$(CFLAGS_CRC)
 
+# all versions of pg_crc32c_loongarch.o need CFLAGS_CRC
+pg_crc32c_loongarch.o: CFLAGS+=$(CFLAGS_CRC)
+pg_crc32c_loongarch_shlib.o: CFLAGS+=$(CFLAGS_CRC)
+pg_crc32c_loongarch_srv.o: CFLAGS+=$(CFLAGS_CRC)
+
 #
 # Shared library versions of object files
 #

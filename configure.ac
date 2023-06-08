@@ -2128,6 +2128,18 @@ fi
 
 AC_SUBST(CFLAGS_CRC)
 
+# Check for LoongArch CRC intrinsics to do CRC calculations.
+#
+# Check if __builtin_loongarch_crcc_* intrinsics can be used
+# with the default compiler flags.
+# CFLAGS_CRC is set if the extra flag is required.
+PGAC_LOONGARCH_CRC32C_INTRINSICS([])
+if test x"$pgac_loongarch_crc32c_intrinsics" != x"yes"; then
+  PGAC_LOONGARCH_CRC32C_INTRINSICS([-march=loongarch64])
+fi
+
+AC_SUBST(CFLAGS_CRC)
+
 # Select CRC-32C implementation.
 #
 # If we are targeting a processor that has Intel SSE 4.2 instructions, we can
@@ -2144,7 +2156,7 @@ AC_SUBST(CFLAGS_CRC)
 #
 # You can override this logic by setting the appropriate USE_*_CRC32 flag to 1
 # in the template or configure command line.
-if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && test x"$USE_SSE42_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_ARMV8_CRC32C" = x"" && test x"$USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK" = x""; then
+if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && test x"$USE_SSE42_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_ARMV8_CRC32C" = x"" && test x"$USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK" = x"" && test x"$USE_LOONGARCH_CRC32C" = x""; then
   # Use Intel SSE 4.2 if available.
   if test x"$pgac_sse42_crc32_intrinsics" = x"yes" && test x"$SSE4_2_TARGETED" = x"1" ; then
     USE_SSE42_CRC32C=1
@@ -2162,10 +2174,15 @@ if test x"$USE_SLICING_BY_8_CRC32C" = x"" && test x"$USE_SSE42_CRC32C" = x"" && 
         if test x"$pgac_armv8_crc32c_intrinsics" = x"yes"; then
           USE_ARMV8_CRC32C_WITH_RUNTIME_CHECK=1
         else
-          # fall back to slicing-by-8 algorithm, which doesn't require any
-          # special CPU support.
-          USE_SLICING_BY_8_CRC32C=1
-	fi
+          if test x"$pgac_loongarch_crc32c_intrinsics" = x"yes"; then
+            # LoongArch CRCC instructions.
+            USE_LOONGARCH_CRC32C=1
+          else
+            # fall back to slicing-by-8 algorithm, which doesn't require any
+            # special CPU support.
+            USE_SLICING_BY_8_CRC32C=1
+          fi
+        fi
       fi
     fi
   fi
@@ -2193,9 +2210,15 @@ else
         PG_CRC32C_OBJS="pg_crc32c_armv8.o pg_crc32c_sb8.o pg_crc32c_armv8_choose.o"
         AC_MSG_RESULT(ARMv8 CRC instructions with runtime check)
       else
-        AC_DEFINE(USE_SLICING_BY_8_CRC32C, 1, [Define to 1 to use software CRC-32C implementation (slicing-by-8).])
-        PG_CRC32C_OBJS="pg_crc32c_sb8.o"
-        AC_MSG_RESULT(slicing-by-8)
+        if test x"$USE_LOONGARCH_CRC32C" = x"1"; then
+          AC_DEFINE(USE_LOONGARCH_CRC32C, 1, [Define to 1 to use LoongArch CRCC instructions.])
+          PG_CRC32C_OBJS="pg_crc32c_loongarch.o"
+          AC_MSG_RESULT(LoongArch CRCC instructions)
+        else
+          AC_DEFINE(USE_SLICING_BY_8_CRC32C, 1, [Define to 1 to use software CRC-32C implementation (slicing-by-8).])
+          PG_CRC32C_OBJS="pg_crc32c_sb8.o"
+          AC_MSG_RESULT(slicing-by-8)
+        fi
       fi
     fi
   fi
