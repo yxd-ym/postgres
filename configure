@@ -18294,8 +18294,8 @@ $as_echo "ARMv8 CRC instructions with runtime check" >&6; }
 $as_echo "#define USE_LOONGARCH_CRC32C 1" >>confdefs.h
 
           PG_CRC32C_OBJS="pg_crc32c_loongarch.o"
-          { $as_echo "$as_me:${as_lineno-$LINENO}: result: LoongArch CRC instructions" >&5
-$as_echo "LoongArch CRC instructions" >&6; }
+          { $as_echo "$as_me:${as_lineno-$LINENO}: result: LoongArch CRCC instructions" >&5
+$as_echo "LoongArch CRCC instructions" >&6; }
         else
 
 $as_echo "#define USE_SLICING_BY_8_CRC32C 1" >>confdefs.h

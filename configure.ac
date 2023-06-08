@@ -2213,7 +2213,7 @@ else
         if test x"$USE_LOONGARCH_CRC32C" = x"1"; then
           AC_DEFINE(USE_LOONGARCH_CRC32C, 1, [Define to 1 to use LoongArch CRCC instructions.])
           PG_CRC32C_OBJS="pg_crc32c_loongarch.o"
-          AC_MSG_RESULT(LoongArch CRC instructions)
+          AC_MSG_RESULT(LoongArch CRCC instructions)
         else
           AC_DEFINE(USE_SLICING_BY_8_CRC32C, 1, [Define to 1 to use software CRC-32C implementation (slicing-by-8).])
           PG_CRC32C_OBJS="pg_crc32c_sb8.o"
