@@ -680,10 +680,10 @@ AC_CACHE_CHECK(
 CFLAGS="$pgac_save_CFLAGS $1"
 AC_LINK_IFELSE([AC_LANG_PROGRAM([],
   [unsigned int crc = 0;
-   crc = __builtin_loongarch_crcc_w_b_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_h_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_w_w(crc, 0);
-   crc = __builtin_loongarch_crcc_w_d_w(crc, 0);
+   crc = __builtin_loongarch_crcc_w_b_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_h_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_w_w(0, crc);
+   crc = __builtin_loongarch_crcc_w_d_w(0, crc);
    /* return computed value, to prevent the above being optimized away */
    return crc == 0;])],
   [Ac_cachevar=yes],
