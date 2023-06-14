@@ -2090,7 +2090,7 @@ int main(void)
 }
 '''
 
-  if cc.links(prog, name: '__builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w, and __builtin_loongarch_crcc_w_d_w without -march=loongarch64',
+  if cc.links(prog, name: '__builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w, and __builtin_loongarch_crcc_w_d_w',
       args: test_c_args)
     # Use LoongArch CRC instruction unconditionally
     cdata.set('USE_LOONGARCH_CRC32C', 1)
