@@ -2095,11 +2095,6 @@ int main(void)
     # Use LoongArch CRC instruction unconditionally
     cdata.set('USE_LOONGARCH_CRC32C', 1)
     have_optimized_crc = true
-  elif cc.links(prog, name: '__builtin_loongarch_crcc_w_b_w, __builtin_loongarch_crcc_w_h_w, __builtin_loongarch_crcc_w_w_w, and __builtin_loongarch_crcc_w_d_w with -march=loongarch64',
-      args: test_c_args + ['-march=loongarch64'])
-    # Use LoongArch CRC instruction unconditionally
-    cdata.set('USE_LOONGARCH_CRC32C', 1)
-    have_optimized_crc = true
   endif
 
 endif
