@@ -2138,8 +2138,6 @@ if test x"$pgac_loongarch_crc32c_intrinsics" != x"yes"; then
   PGAC_LOONGARCH_CRC32C_INTRINSICS([-march=loongarch64])
 fi
 
-AC_SUBST(CFLAGS_CRC)
-
 # Select CRC-32C implementation.
 #
 # If we are targeting a processor that has Intel SSE 4.2 instructions, we can
