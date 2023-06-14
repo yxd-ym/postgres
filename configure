@@ -18114,8 +18114,6 @@ fi
 
 fi
 
-
-
 # Check for LoongArch CRC intrinsics to do CRC calculations.
 #
 # Check if __builtin_loongarch_crcc_* intrinsics can be used
