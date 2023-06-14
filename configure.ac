@@ -2126,8 +2126,6 @@ if test x"$pgac_armv8_crc32c_intrinsics" != x"yes"; then
   PGAC_ARMV8_CRC32C_INTRINSICS([-march=armv8-a+crc])
 fi
 
-AC_SUBST(CFLAGS_CRC)
-
 # Check for LoongArch CRC intrinsics to do CRC calculations.
 #
 # Check if __builtin_loongarch_crcc_* intrinsics can be used
@@ -2137,6 +2135,8 @@ PGAC_LOONGARCH_CRC32C_INTRINSICS([])
 if test x"$pgac_loongarch_crc32c_intrinsics" != x"yes"; then
   PGAC_LOONGARCH_CRC32C_INTRINSICS([-march=loongarch64])
 fi
+
+AC_SUBST(CFLAGS_CRC)
 
 # Select CRC-32C implementation.
 #
