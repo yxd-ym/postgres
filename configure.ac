@@ -2130,11 +2130,7 @@ fi
 #
 # Check if __builtin_loongarch_crcc_* intrinsics can be used
 # with the default compiler flags.
-# CFLAGS_CRC is set if the extra flag is required.
 PGAC_LOONGARCH_CRC32C_INTRINSICS([])
-if test x"$pgac_loongarch_crc32c_intrinsics" != x"yes"; then
-  PGAC_LOONGARCH_CRC32C_INTRINSICS([-march=loongarch64])
-fi
 
 AC_SUBST(CFLAGS_CRC)
 

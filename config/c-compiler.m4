@@ -669,8 +669,7 @@ undefine([Ac_cachevar])dnl
 # __builtin_loongarch_crcc_w_w_w and __builtin_loongarch_crcc_w_d_w
 # intrinsic functions.
 #
-# If the intrinsics are supported, sets pgac_loongarch_crc32c_intrinsics,
-# and CFLAGS_CRC.
+# If the intrinsics are supported, sets pgac_loongarch_crc32c_intrinsics.
 AC_DEFUN([PGAC_LOONGARCH_CRC32C_INTRINSICS],
 [define([Ac_cachevar], [AS_TR_SH([pgac_cv_loongarch_crc32c_intrinsics_$1])])dnl
 AC_CACHE_CHECK(
@@ -690,7 +689,6 @@ AC_LINK_IFELSE([AC_LANG_PROGRAM([],
   [Ac_cachevar=no])
 CFLAGS="$pgac_save_CFLAGS"])
 if test x"$Ac_cachevar" = x"yes"; then
-  CFLAGS_CRC="$1"
   pgac_loongarch_crc32c_intrinsics=yes
 fi
 undefine([Ac_cachevar])dnl
