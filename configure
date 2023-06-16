@@ -18154,6 +18154,7 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $pgac_cv_loongarch_crc32c_intrinsics_" >&5
 $as_echo "$pgac_cv_loongarch_crc32c_intrinsics_" >&6; }
 if test x"$pgac_cv_loongarch_crc32c_intrinsics_" = x"yes"; then
+  CFLAGS_CRC=""
   pgac_loongarch_crc32c_intrinsics=yes
 fi
 
