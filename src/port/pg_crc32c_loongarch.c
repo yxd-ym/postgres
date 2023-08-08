@@ -23,7 +23,8 @@ pg_comp_crc32c_loongarch(pg_crc32c crc, const void *data, size_t len)
 	const unsigned char *pend = p + len;
 
 	/*
-	 * Aligned memory access is significantly faster.
+	 * Loongarch desktop and server chips support unaligned memory access by default.
+	 * However, aligned memory access is significantly faster.
 	 * Process leading bytes so that the loop below starts with a pointer aligned to eight bytes.
 	 */
 	if (!PointerIsAligned(p, uint16) &&
