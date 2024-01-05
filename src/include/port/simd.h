@@ -47,6 +47,13 @@ typedef __m128i Vector32;
 typedef uint8x16_t Vector8;
 typedef uint32x4_t Vector32;
 
+#elif defined(__loongarch__)
+
+#include <lsxintrin.h>
+#define USE_LSX
+typedef __m128i Vector8;
+typedef __m128i Vector32;
+
 #else
 /*
  * If no SIMD instructions are available, we can in some cases emulate vector
@@ -111,6 +118,8 @@ vector8_load(Vector8 *v, const uint8 *s)
 	*v = _mm_loadu_si128((const __m128i *) s);
 #elif defined(USE_NEON)
 	*v = vld1q_u8(s);
+#elif defined(USE_LSX)
+	*v = __lsx_vld(s, 0);
 #else
 	memcpy(v, s, sizeof(Vector8));
 #endif
@@ -124,6 +133,8 @@ vector32_load(Vector32 *v, const uint32 *s)
 	*v = _mm_loadu_si128((const __m128i *) s);
 #elif defined(USE_NEON)
 	*v = vld1q_u32(s);
+#elif defined(USE_LSX)
+	*v = __lsx_vld(s, 0);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
@@ -138,6 +149,8 @@ vector8_broadcast(const uint8 c)
 	return _mm_set1_epi8(c);
 #elif defined(USE_NEON)
 	return vdupq_n_u8(c);
+#elif defined(USE_LSX)
+	return __lsx_vldrepl_b(&c, 0);
 #else
 	return ~UINT64CONST(0) / 0xFF * c;
 #endif
@@ -151,6 +164,8 @@ vector32_broadcast(const uint32 c)
 	return _mm_set1_epi32(c);
 #elif defined(USE_NEON)
 	return vdupq_n_u32(c);
+#elif defined(USE_LSX)
+	return __lsx_vldrepl_w(&c, 0);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
@@ -274,6 +289,8 @@ vector8_is_highbit_set(const Vector8 v)
 	return _mm_movemask_epi8(v) != 0;
 #elif defined(USE_NEON)
 	return vmaxvq_u8(v) > 0x7F;
+#elif defined(USE_LSX)
+	return __lsx_vmskgez_b(v) == 0;
 #else
 	return v & vector8_broadcast(0x80);
 #endif
@@ -341,6 +358,8 @@ vector8_or(const Vector8 v1, const Vector8 v2)
 	return _mm_or_si128(v1, v2);
 #elif defined(USE_NEON)
 	return vorrq_u8(v1, v2);
+#elif defined(USE_LSX)
+	return __lsx_vor_v(v1, v2);
 #else
 	return v1 | v2;
 #endif
@@ -354,6 +373,8 @@ vector32_or(const Vector32 v1, const Vector32 v2)
 	return _mm_or_si128(v1, v2);
 #elif defined(USE_NEON)
 	return vorrq_u32(v1, v2);
+#elif defined(USE_LSX)
+	return __lsx_vor_v(v1, v2);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
@@ -372,6 +393,8 @@ vector8_ssub(const Vector8 v1, const Vector8 v2)
 	return _mm_subs_epu8(v1, v2);
 #elif defined(USE_NEON)
 	return vqsubq_u8(v1, v2);
+#elif defined(USE_LSX)
+	return __lsx_vssub_bu(v1, v2);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
@@ -388,6 +411,8 @@ vector8_eq(const Vector8 v1, const Vector8 v2)
 	return _mm_cmpeq_epi8(v1, v2);
 #elif defined(USE_NEON)
 	return vceqq_u8(v1, v2);
+#elif defined(USE_LSX)
+	return __lsx_vseq_b(v1, v2);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
@@ -400,6 +425,8 @@ vector32_eq(const Vector32 v1, const Vector32 v2)
 	return _mm_cmpeq_epi32(v1, v2);
 #elif defined(USE_NEON)
 	return vceqq_u32(v1, v2);
+#elif defined(USE_LSX)
+	return __lsx_vseq_w(v1, v2);
 #endif
 }
 #endif							/* ! USE_NO_SIMD */
