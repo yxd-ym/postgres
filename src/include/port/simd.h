@@ -24,8 +24,10 @@
 #include "port/simd/simd-sse2.h"
 #elif defined(__aarch64__) && defined(__ARM_NEON)
 #include "port/simd/simd-neon.h"
+/*
 #elif defined(__loongarch__)
 #include "port/simd/simd-lsx.h"
+*/
 #else
 #include "port/simd/simd-none.h"
 #endif
