@@ -89,6 +89,12 @@ vector8_eq(const Vector8 v1, const Vector8 v2)
     return __lsx_vseq_b(v1, v2);
 }
 
+static inline Vector8
+vector8_min(const Vector8 v1, const Vector8 v2)
+{
+    return __lsx_vmin_bu(v1, v2);
+}
+
 static inline Vector32
 vector32_eq(const Vector32 v1, const Vector32 v2)
 {
