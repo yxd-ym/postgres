@@ -94,6 +94,12 @@ vector8_eq(const Vector8 v1, const Vector8 v2)
     return vceqq_u8(v1, v2);
 }
 
+static inline Vector8
+vector8_min(const Vector8 v1, const Vector8 v2)
+{
+    return vminq_u8(v1, v2);
+}
+
 static inline Vector32
 vector32_eq(const Vector32 v1, const Vector32 v2)
 {

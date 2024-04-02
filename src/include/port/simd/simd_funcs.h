@@ -107,6 +107,11 @@ static inline Vector8 vector8_ssub(const Vector8 v1, const Vector8 v2);
 static inline Vector8 vector8_eq(const Vector8 v1, const Vector8 v2);
 
 /*
+ * Given two vectors, return a vector with the minimum element of each.
+ */
+static inline Vector8 vector8_min(const Vector8 v1, const Vector8 v2);
+
+/*
  * Return a vector with all bits set in each lane where the corresponding
  * lanes in the inputs are equal.
  */
