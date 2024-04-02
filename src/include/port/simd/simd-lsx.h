@@ -56,7 +56,7 @@ vector8_has_le(const Vector8 v, const uint8 c)
 static inline bool
 vector8_is_highbit_set(const Vector8 v)
 {
-    return __lsx_vmskgez_b(v) == 0;
+    return (__lsx_vmskgez_b(v) == 0);
 }
 
 static inline bool
