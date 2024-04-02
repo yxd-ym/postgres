@@ -65,6 +65,12 @@ vector8_is_highbit_set(const Vector8 v)
     return _mm_movemask_epi8(v) != 0;
 }
 
+static inline uint32
+vector8_highbit_mask(const Vector8 v)
+{
+    return (uint32) _mm_movemask_epi8(v);
+}
+
 static inline bool
 vector32_is_highbit_set(const Vector32 v)
 {

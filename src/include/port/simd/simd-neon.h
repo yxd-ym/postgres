@@ -64,6 +64,27 @@ vector8_is_highbit_set(const Vector8 v)
     return vmaxvq_u8(v) > 0x7F;
 }
 
+static inline uint32
+vector8_highbit_mask(const Vector8 v)
+{
+    /*
+     * Note: It would be faster to use vget_lane_u64 and vshrn_n_u16, but that
+     * returns a uint64, making it inconvenient to combine mask values from
+     * multiple vectors.
+     */
+    static const uint8 mask[16] = {
+        1 << 0, 1 << 1, 1 << 2, 1 << 3,
+        1 << 4, 1 << 5, 1 << 6, 1 << 7,
+        1 << 0, 1 << 1, 1 << 2, 1 << 3,
+        1 << 4, 1 << 5, 1 << 6, 1 << 7,
+    };
+
+    uint8x16_t	masked = vandq_u8(vld1q_u8(mask), (uint8x16_t) vshrq_n_s8((int8x16_t) v, 7));
+    uint8x16_t	maskedhi = vextq_u8(masked, masked, 8);
+
+    return (uint32) vaddvq_u16((uint16x8_t) vzip1q_u8(masked, maskedhi));
+}
+
 static inline bool
 vector32_is_highbit_set(const Vector32 v)
 {
