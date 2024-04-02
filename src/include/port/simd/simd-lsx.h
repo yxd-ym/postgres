@@ -56,13 +56,13 @@ vector8_has_le(const Vector8 v, const uint8 c)
 static inline bool
 vector8_is_highbit_set(const Vector8 v)
 {
-    return __lsx_vpickve2gr_h(__lsx_vmskltz_b(v)) != 0;
+    return __lsx_vpickve2gr_h(__lsx_vmskltz_b(v), 0) != 0;
 }
 
 static inline bool
 vector32_is_highbit_set(const Vector32 v)
 {
-    return __lsx_vpickve2gr_h(__lsx_vmskltz_w(v)) != 0;
+    return __lsx_vpickve2gr_h(__lsx_vmskltz_w(v), 0) != 0;
 }
 
 static inline Vector8
