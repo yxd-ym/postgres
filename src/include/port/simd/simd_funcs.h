@@ -57,6 +57,11 @@ static inline bool vector8_is_highbit_set(const Vector8 v);
 
 #ifndef USE_NO_SIMD
 /*
+ * Return a bitmask formed from the high-bit of each element.
+ */
+static inline uint32 vector8_highbit_mask(const Vector8 v);
+
+/*
  * Exactly like vector8_is_highbit_set except for the input type, so it
  * looks at each byte separately.
  *

@@ -59,6 +59,12 @@ vector8_is_highbit_set(const Vector8 v)
     return __lsx_vpickve2gr_h(__lsx_vmskltz_b(v), 0) != 0;
 }
 
+static inline uint32
+vector8_highbit_mask(const Vector8 v)
+{
+    return (uint32) __lsx_vpickve2gr_h(__lsx_vmskltz_b(v), 0);
+}
+
 static inline bool
 vector32_is_highbit_set(const Vector32 v)
 {
