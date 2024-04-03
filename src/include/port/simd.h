@@ -44,13 +44,6 @@
  * not worth the trouble for now.
  */
 #include "port/simd/simd-neon.h"
-#elif defined(__loongarch__) && defined(__loongarch_sx)
-/*
- * We use the LSX instructions if the compiler provides access to them
- * (as indicated by __loongarch_sx) and we are on loongarch64.
- * TODO: decide when to enable it.
- */
-#include "port/simd/simd-lsx.h"
 #else
 /*
  * If no SIMD instructions are available, we can in some cases emulate vector
