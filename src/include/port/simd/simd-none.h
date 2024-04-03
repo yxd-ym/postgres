@@ -25,31 +25,31 @@ typedef uint64 Vector8;
 static inline void
 vector8_load(Vector8 *v, const uint8 *s)
 {
-    memcpy(v, s, sizeof(Vector8));
+	memcpy(v, s, sizeof(Vector8));
 }
 
 static inline Vector8
 vector8_broadcast(const uint8 c)
 {
-    return ~UINT64CONST(0) / 0xFF * c;
+	return ~UINT64CONST(0) / 0xFF * c;
 }
 
 static inline bool
 vector8_has(const Vector8 v, const uint8 c)
 {
-    return vector8_has_zero(v ^ vector8_broadcast(c));
+	return vector8_has_zero(v ^ vector8_broadcast(c));
 }
 
 static inline bool
 vector8_has_zero(const Vector8 v)
 {
-    return vector8_has_le(v, 0);
+	return vector8_has_le(v, 0);
 }
 
 static inline bool
 vector8_has_le(const Vector8 v, const uint8 c)
 {
-    bool		result = false;
+	bool		result = false;
 
 	/*
 	 * To find bytes <= c, we can use bitwise operations to find bytes < c+1,
@@ -72,17 +72,17 @@ vector8_has_le(const Vector8 v, const uint8 c)
 		}
 	}
 
-    return result;
+	return result;
 }
 
 static inline bool
 vector8_is_highbit_set(const Vector8 v)
 {
-    return v & vector8_broadcast(0x80);
+	return v & vector8_broadcast(0x80);
 }
 
 static inline Vector8
 vector8_or(const Vector8 v1, const Vector8 v2)
 {
-    return v1 | v2;
+	return v1 | v2;
 }
