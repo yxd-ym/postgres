@@ -146,3 +146,19 @@ test_lfind32(PG_FUNCTION_ARGS)
 
 	PG_RETURN_VOID();
 }
+
+PG_FUNCTION_INFO_V1(drive_lfind32);
+Datum
+drive_lfind32(PG_FUNCTION_ARGS)
+{
+	int			array_size = PG_GETARG_INT32(0);
+	uint32	   *test_array = palloc0(array_size * sizeof(uint32));
+
+	for (int i = 0; i < 100000000; i++)
+	{
+		if (pg_lfind32(1, test_array, array_size))
+			elog(ERROR, "pg_lfind32() found nonexistent element");
+	}
+
+	PG_RETURN_VOID();
+}
