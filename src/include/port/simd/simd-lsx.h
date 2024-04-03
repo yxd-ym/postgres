@@ -1,10 +1,22 @@
-#ifndef INSIDE_SIMD_H
+/*-------------------------------------------------------------------------
+ *
+ * simd-lsx.h
+ *	  SIMD support via LSX instructions of Loongarch64.
+ *
+ * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1994, Regents of the University of California
+ *
+ * src/include/port/simd/simd-neon.h
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#ifndef _INSIDE_SIMD_H
 #error "should be included via simd.h"
 #endif
 
-/*
- *
- */
+#define _INSIDE_SIMD_IMPLEMENTATION
+
 #include <lsxintrin.h>
 typedef __m128i Vector8;
 typedef __m128i Vector32;

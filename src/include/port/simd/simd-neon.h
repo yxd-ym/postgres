@@ -1,15 +1,22 @@
-#ifndef INSIDE_SIMD_H
+/*-------------------------------------------------------------------------
+ *
+ * simd-neon.h
+ *	  SIMD support via NEON instructions of ARM.
+ *
+ * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1994, Regents of the University of California
+ *
+ * src/include/port/simd/simd-neon.h
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#ifndef _INSIDE_SIMD_H
 #error "should be included via simd.h"
 #endif
 
-/*
- * We use the Neon instructions if the compiler provides access to them (as
- * indicated by __ARM_NEON) and we are on aarch64.  While Neon support is
- * technically optional for aarch64, it appears that all available 64-bit
- * hardware does have it.  Neon exists in some 32-bit hardware too, but we
- * could not realistically use it there without a run-time check, which seems
- * not worth the trouble for now.
- */
+#define _INSIDE_SIMD_IMPLEMENTATION
+
 #include <arm_neon.h>
 typedef uint8x16_t Vector8;
 typedef uint32x4_t Vector32;
