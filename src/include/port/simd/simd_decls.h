@@ -1,12 +1,12 @@
 /*-------------------------------------------------------------------------
  *
- * simd_funcs.h
+ * simd_decls.h
  *	  Declaration of functions of platform-specific vector operations.
  *
  * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
  * Portions Copyright (c) 1994, Regents of the University of California
  *
- * src/include/port/simd/simd_funcs.h
+ * src/include/port/simd/simd_decls.h
  *
  *-------------------------------------------------------------------------
  */

@@ -20,7 +20,7 @@
 #define USE_NO_SIMD
 typedef uint64 Vector8;
 
-#include "port/simd/simd_funcs.h"
+#include "port/simd/simd_decls.h"
 
 static inline void
 vector8_load(Vector8 *v, const uint8 *s)

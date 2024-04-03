@@ -21,7 +21,7 @@
 typedef __m128i Vector8;
 typedef __m128i Vector32;
 
-#include "port/simd/simd_funcs.h"
+#include "port/simd/simd_decls.h"
 
 static inline void
 vector8_load(Vector8 *v, const uint8 *s)
