@@ -1,16 +1,22 @@
-#ifndef INSIDE_SIMD_H
+/*-------------------------------------------------------------------------
+ *
+ * simd-sse2.h
+ *	  SIMD support via SSE2 instructions of 64-bit x86.
+ *
+ * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1994, Regents of the University of California
+ *
+ * src/include/port/simd/simd-sse2.h
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#ifndef _INSIDE_SIMD_H
 #error "should be included via simd.h"
 #endif
 
-/*
- * SSE2 instructions are part of the spec for the 64-bit x86 ISA. We assume
- * that compilers targeting this architecture understand SSE2 intrinsics.
- *
- * We use emmintrin.h rather than the comprehensive header immintrin.h in
- * order to exclude extensions beyond SSE2. This is because MSVC, at least,
- * will allow the use of intrinsics that haven't been enabled at compile
- * time.
- */
+#define _INSIDE_SIMD_IMPLEMENTATION
+
 #include <emmintrin.h>
 typedef __m128i Vector8;
 typedef __m128i Vector32;

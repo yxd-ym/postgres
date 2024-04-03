@@ -1,15 +1,22 @@
-#ifndef INSIDE_SIMD_H
+/*-------------------------------------------------------------------------
+ *
+ * simd-none.h
+ *	  No specific SIMD support.
+ *
+ * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1994, Regents of the University of California
+ *
+ * src/include/port/simd/simd-none.h
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#ifndef _INSIDE_SIMD_H
 #error "should be included via simd.h"
 #endif
 
-/*
- * If no SIMD instructions are available, we can in some cases emulate vector
- * operations using bitwise operations on unsigned integers.  Note that many
- * of the functions in this file presently do not have non-SIMD
- * implementations.  In particular, none of the functions involving Vector32
- * are implemented without SIMD since it's likely not worthwhile to represent
- * two 32-bit integers using a uint64.
- */
+#define _INSIDE_SIMD_IMPLEMENTATION
+
 #define USE_NO_SIMD
 typedef uint64 Vector8;
 

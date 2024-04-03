@@ -1,5 +1,18 @@
-#ifndef INSIDE_SIMD_H
-#error "should be included via simd.h"
+/*-------------------------------------------------------------------------
+ *
+ * simd_funcs.h
+ *	  Declaration of functions of platform-specific vector operations.
+ *
+ * Portions Copyright (c) 1996-2024, PostgreSQL Global Development Group
+ * Portions Copyright (c) 1994, Regents of the University of California
+ *
+ * src/include/port/simd/simd_funcs.h
+ *
+ *-------------------------------------------------------------------------
+ */
+
+#ifndef _INSIDE_SIMD_IMPLEMENTATION
+#error "should be included in one of the simd implementation header file"
 #endif
 
 /* load/store operations */
