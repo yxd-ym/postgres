@@ -9,9 +9,9 @@
  * src/include/port/simd.h
  *
  * NOTES
- * - VectorN in this file refers to a register where the element operands
- * are N bits wide. The vector width is platform-specific, so users that care
- * about that will need to inspect "sizeof(VectorN)".
+ * - VectorN used in SIMD implementation refers to a register where the
+ * element operands are N bits wide. The vector width is platform-specific,
+ * so users that care about that will need to inspect "sizeof(VectorN)".
  *
  *-------------------------------------------------------------------------
  */
