@@ -48,7 +48,9 @@
 /*
  * We use the LSX instructions if the compiler provides access to them
  * (as indicated by __loongarch_sx) and we are on loongarch64.
- * TODO: decide when to enable it.
+ * See the following documentation for how to enable LSX:
+ * - https://gcc.gnu.org/onlinedocs/gcc/LoongArch-Options.html#index-ml_005ba_005dsx
+ * - https://clang.llvm.org/docs/ClangCommandLineReference.html#cmdoption-clang-mlsx
  */
 #include "port/simd/simd-lsx.h"
 #else
